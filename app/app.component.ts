@@ -2,6 +2,9 @@ import {Component} from 'angular2/core';
 
 @Component({
     selector: 'my-app',
-    template: '<h1>My First Angular 2 App</h1>'
+    templateUrl: 'app/app.component.html',
+    styleUrls: ['app/app.component.css']
 })
-export class AppComponent { }
+export class AppComponent { 
+      title = 'Toy Robot Simulator!';
+}

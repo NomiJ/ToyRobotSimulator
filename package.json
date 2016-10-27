@@ -2,14 +2,18 @@
   "name": "angular2-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "start": "concurrently \"npm run html\" \"npm run css\" \"npm run tsc:w\" \"npm run lite\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "typings": "typings",
     "postinstall": "typings install",
     "pretest": "npm run tsc",
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "launch": "ts-node ./app/main.ts",
+    "html": "find ./app -name '*.html'  -type f -exec cp {} ./dist \\;",
+    "css": "find ./app -name '*.css'  -type f -exec cp {} ./dist \\;",
+    "clean": "rm -rf dist"
   },
   "license": "ISC",
   "dependencies": {
@@ -22,6 +26,7 @@
     "zone.js": "^0.6.6"
   },
   "devDependencies": {
+    "@types/node": "^6.0.46",
     "concurrently": "^2.0.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",

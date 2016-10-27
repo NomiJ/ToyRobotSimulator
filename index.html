@@ -18,6 +18,10 @@
     <!-- 2. Configure SystemJS -->
     <script>
         System.config({
+             map: {
+      // our app is within the app folder
+                app: 'dist'
+            },
             packages: {
                 app: {
                     format: 'register',
@@ -25,7 +29,7 @@
                 }
             }
         });
-        System.import('app/main')
+        System.import('dist/main')
                 .then(null, console.error.bind(console));
     </script>
 </head>

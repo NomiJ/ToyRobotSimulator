@@ -5,5 +5,6 @@ coverage
 node_modules
 typings
 npm-debug.log
-app/**/*.js
-app/**/*.map
+dist/**/*.js
+dist/**/*.map
+dist/

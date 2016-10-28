@@ -18,6 +18,6 @@ export class CommandComponent {
 
 	constructor(commandService: CommandService) {
 		//new CommandService() would not let you unit test this
-		this.commandHistory = commandService.getCommandHistory();
+		//this.commandHistory = commandService.getCommandHistory();
 	}
 }

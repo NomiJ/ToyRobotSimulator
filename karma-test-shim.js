@@ -10,7 +10,7 @@ __karma__.loaded = function () {
 
 System.config({
     packages: {
-        'base/app': {
+        './app': {
             defaultExtension: false,
             format: 'register',
             map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})

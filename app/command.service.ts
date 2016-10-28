@@ -1,42 +1,45 @@
-enum NOSE_DIRECTION {
+import {Injectable} from 'angular2/core';
+
+const enum DIRECTION {
 	NORTH,
 	EAST,
 	SOUTH,
 	WEST
 }
 
-enum COMMAND_TYPE {
+export enum COMMAND_DICT {
 	LEFT,
 	RIGHT,
 	PLACE,
 	MOVE,
-	INIT,
 	REPORT,
-	NONE
+	INVALID
+}
+
+export class Command{
+	cmd:COMMAND_DICT;
+	args:string[];
 }
 
 interface ParserInterface {
-	format: string;
-	//setErrorHandler();
-	parse(inputCommand: string): COMMAND_TYPE;
-	//interpret(Map<String,Expression> variables) : number ;
+	parse(inputCommand: string): Command;
 }
 
-
+@Injectable()
 export class CommandService implements ParserInterface {
 
-	format: string;
-	private commandHistory: string[];
+	private commandHistory: Command[];
 	constructor() {
-		this.format = "";
-	}
-
-	getCommandHistory(): string[] {
+    }
+	getCommandHistory(): Command[] {
 		return this.commandHistory;
 	}
 
-	parse(inputCommand: string): COMMAND_TYPE {
-		return COMMAND_TYPE.NONE;
+	parse(inputCommand: string): Command {
+		let command: Command = new Command();
+		let cmd:string = inputCommand.trim().split(' ')[0]
+		command.cmd = COMMAND_DICT[cmd] || COMMAND_DICT.INVALID
+		return command;
 	}
 
 }

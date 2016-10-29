@@ -1,6 +1,8 @@
 import { Component, EventEmitter } from 'angular2/core'
 import { BoardService } from './board.service'
 import {GLOBALS} from './globals'
+import {CommService} from './comm.service'
+import {Robot} from './robot.service'
 
 @Component({
 	selector: 'board',
@@ -25,16 +27,27 @@ import {GLOBALS} from './globals'
     	background: red;
 	}
   `],
-	providers: [BoardService]
+	providers: [BoardService, GLOBALS]
 })
 
 //Angular would know that this is a component class, by lokking into meta data
 export class BoardComponent {
 	rows: number[] = Array.from({ length: GLOBALS.MAXROWS }).map((x, i) => ( (GLOBALS.MAXROWS-1) -i));
 	cols: number[] = Array.from({ length: GLOBALS.MAXCOLS }).map((x, i) => i);
+	static rx:number = -1;
+	static ry:number = -1;
+
+	constructor(public comBus: CommService) {
+		let r:Robot= new Robot()
+		let m:string = r.mapCommand(comBus.command)
+		BoardComponent.rx = r.x
+		BoardComponent.ry = r.y
+		comBus.sendMessage(m)
+
+	}
 
 	classMap(r: number, c: number) {
-		if (r == 0 && c == 0)
+		if (r == BoardComponent.rx && c == BoardComponent.ry)
 			return "has-robot";
 		return "no-robot";
 	}

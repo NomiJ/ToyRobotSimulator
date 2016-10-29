@@ -11,8 +11,7 @@ interface IMoveAble {
 
 }
 
-export class Robot implements IMoveAble {
-    //This is a singleton class, but its anti pattern in angular2
+export class Robot implements IMoveAble {//Singleton? May be look for a better way in future
     x: number = -1
     y: number = -1
     nose: DIRECTION = DIRECTION.NONE;
@@ -31,8 +30,8 @@ export class Robot implements IMoveAble {
         this.nose = DIRECTION.NONE;
     }
 
-    mapCommand(command: Command): string {
-        if (this.isPlaced) {
+    public mapCommand(command: Command): string {
+        if (this.isPlaced && command) {
             switch (command.cmd) {
                 case COMMAND_DICT.LEFT:
                     this.rotate(GLOBALS.LEFT);

@@ -22,7 +22,7 @@ export class CommandService implements ParserInterface {
 
 	parse(inputCommand: string): Command {//This method is actuall public static
 		let command: Command = new Command();
-		let cmd:string = inputCommand.trim().split(' ')[0] //these are lot of if else
+		let cmd:string = inputCommand.trim().split(' ')[0] //this is bad code :todo
 		command.cmd = COMMAND_DICT[cmd] || COMMAND_DICT.NOT_VALID
 		return command;
 	}

@@ -1,5 +1,6 @@
 import { Component, EventEmitter } from 'angular2/core'
 import { BoardService } from './board.service'
+import {GLOBALS} from './globals'
 
 @Component({
 	selector: 'board',
@@ -29,8 +30,8 @@ import { BoardService } from './board.service'
 
 //Angular would know that this is a component class, by lokking into meta data
 export class BoardComponent {
-	rows: number[] = Array.from({ length: BoardService.ROWS }).map((x, i) => i);
-	cols: number[] = Array.from({ length: BoardService.COLS }).map((x, i) => i);
+	rows: number[] = Array.from({ length: GLOBALS.MAXROWS }).map((x, i) => ( (GLOBALS.MAXROWS-1) -i));
+	cols: number[] = Array.from({ length: GLOBALS.MAXCOLS }).map((x, i) => i);
 
 	classMap(r: number, c: number) {
 		if (r == 0 && c == 0)

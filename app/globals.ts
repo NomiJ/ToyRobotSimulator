@@ -25,6 +25,7 @@ export class GLOBALS {
 	public static version: string = "0.0.9";
 	public static SYS_MSG = {};
 	public static PLACEMENT_CONSTRAINT = -100;
+	public static VALIDATION_CONSTRAINT = -101;
 	public static SUCCESS = 100;
 	public static RIGHT = 1;
 	public static LEFT = -1;
@@ -46,5 +47,7 @@ GLOBALS.SYS_MSG[COMMAND_DICT.PLACE] = "Command Accepted, PLACING ";
 GLOBALS.SYS_MSG[COMMAND_DICT.MOVE] = "Command Accepted, MOVING";
 GLOBALS.SYS_MSG[COMMAND_DICT.REPORT] = "Command Accepted, REPORTING";
 GLOBALS.SYS_MSG[COMMAND_DICT.NOT_VALID] = "Mike (wonder), This Robot is sensitive about its Command Manual.";
-GLOBALS.SYS_MSG[GLOBALS.PLACEMENT_CONSTRAINT] = "Mike (wonder), This Robot is sensitive about its Command Manual.";
+GLOBALS.SYS_MSG[GLOBALS.PLACEMENT_CONSTRAINT] = "This ROBOT needs a placement first";
+GLOBALS.SYS_MSG[GLOBALS.VALIDATION_CONSTRAINT] = "Something is wrong with the argument validation ";
+
 

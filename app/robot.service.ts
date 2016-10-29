@@ -1,33 +1,37 @@
 import { GLOBALS, COMMAND_DICT, DIRECTION } from './globals'
 import { Command } from './command.service'
 
-interface IMoveAble{
-    move():void
-    rotate(direction:number):void
+interface IMoveAble {
+    x: number
+    y: number
+    nose: DIRECTION
+
+    move(): string
+    rotate(direction: number): void
 
 }
 
 export class Robot implements IMoveAble {
     //This is a singleton class, but its anti pattern in angular2
-     x: number = -1
-     y: number = -1
-     nose: DIRECTION = DIRECTION.NONE;
+    x: number = -1
+    y: number = -1
+    nose: DIRECTION = DIRECTION.NONE;
 
-     public static r:Robot;
-     constructor(){
-         if(!Robot.r){
-             Robot.r = this
-         }
-         return Robot.r;
-     }
-     isPlaced = true;
+    public static r: Robot;
+    constructor() {
+        if (!Robot.r) {
+            Robot.r = this
+        }
+        return Robot.r;
+    }
+    isPlaced = true;
 
-     initialize() {
+    initialize() {
         this.x = this.y = -1;
         this.nose = DIRECTION.NONE;
     }
 
-     mapCommand(command: Command): string {
+    mapCommand(command: Command): string {
         if (this.isPlaced) {
             switch (command.cmd) {
                 case COMMAND_DICT.LEFT:
@@ -36,15 +40,15 @@ export class Robot implements IMoveAble {
                 case COMMAND_DICT.RIGHT:
                     this.rotate(GLOBALS.RIGHT);
                     break;
-                case COMMAND_DICT.MOVE:
-                    this.move();
-                    break;
-                case COMMAND_DICT.PLACE:
-                    this.placeValidate(command.args);
-                    break;
                 case COMMAND_DICT.REPORT:
                     this.report();
                     break;
+               //These cases return the success or failure reason
+               case COMMAND_DICT.MOVE:
+                    return this.move();
+                case COMMAND_DICT.PLACE:
+                    return this.placeValidate(command.args);
+               
                 default:
                     break;
 
@@ -56,7 +60,7 @@ export class Robot implements IMoveAble {
         return GLOBALS.SYS_MSG[GLOBALS.SUCCESS]
     }
 
-    rotate(direction: number):void {//Will just move the direction
+    rotate(direction: number): void {//Will just move the direction
         //direction == -1 for LEFT
         //direction == 1 for RIGHT
 
@@ -64,36 +68,41 @@ export class Robot implements IMoveAble {
 
     }
 
-     move():void {//Will just move the position based on direction
+    move(): string {//Will just move the position based on direction
+        let validation:boolean  = false
 
         switch (this.nose) {
 
             case DIRECTION.NORTH:
                 //increase y
-                this.y = this.validate(this.x, this.y + 1) ? this.y + 1 : this.y
+                validation = this.validate(this.x, this.y + 1)
+                this.y = validation ? this.y + 1 : this.y
                 break;
 
             case DIRECTION.EAST:
                 //increase x
-                this.x = this.validate(this.x + 1, this.y) ? this.x + 1 : this.x
+                validation = this.validate(this.x + 1, this.y)
+                this.x = validation ? this.x + 1 : this.x
                 break;
 
             case DIRECTION.SOUTH:
                 //decrease y
-                this.y = this.validate(this.x, this.y - 1) ? this.y - 1 : this.y
+                validation = this.validate(this.x, this.y - 1)
+                this.y = validation ? this.y - 1 : this.y
 
                 break;
 
             case DIRECTION.WEST:
                 //decrease x
-                this.x = this.validate(this.x - 1, this.y) ? this.x - 1 : this.x
+                validation = this.validate(this.x - 1, this.y) 
+                this.x = validation? this.x - 1 : this.x
 
                 break;
         }
-
+        return GLOBALS.SYS_MSG[GLOBALS.SUCCESS]
     }
 
-    private  setDirection(f: string) {
+    private setDirection(f: string) {
         switch (f.toLowerCase()) {
 
             case 'n':
@@ -114,26 +123,28 @@ export class Robot implements IMoveAble {
         }
     }
 
-    private  validate(x: number, y: number): boolean {
+    private validate(x: number, y: number): boolean {
         return (x >= 0 && x < GLOBALS.MAXROWS) &&
             (y >= 0 && y < GLOBALS.MAXCOLS)
     }
 
-     placeValidate(args: string[]) {//Will only place -- the place command needs alot of improvement structure wise
+    placeValidate(args: string[]) : string {//Will only place -- the place command needs alot of improvement structure wise
 
         if (args.length == 3 && this.validate(+args[0], +args[1]) && (args[2].match("[nesw]/i"))) {
             this.place(+args[0], +args[1])
             this.setDirection(args[2])
+            return         this.report()
+
         }
+        return GLOBALS.SYS_MSG[GLOBALS.VALIDATION_CONSTRAINT]
     }
 
-      place(x: number, y: number) {
+    place(x: number, y: number) {
         this.x = x
         this.y = y
-        this.report()
     }
 
-     report(): string {//Will report
+    report(): string {//Will report
         let r: string = `My position is ${this.x} row and ${this.y} cols and facing  ${this.nose}`
         return r;
     }

@@ -1,20 +1,7 @@
 import {Injectable} from 'angular2/core';
+import {COMMAND_DICT}  from './globals'; 
 
-const enum DIRECTION {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST
-}
 
-export enum COMMAND_DICT {
-	LEFT,
-	RIGHT,
-	PLACE,
-	MOVE,
-	REPORT,
-	INVALID
-}
 
 export class Command{
 	cmd:COMMAND_DICT;
@@ -38,7 +25,7 @@ export class CommandService implements ParserInterface {
 	parse(inputCommand: string): Command {
 		let command: Command = new Command();
 		let cmd:string = inputCommand.trim().split(' ')[0]
-		command.cmd = COMMAND_DICT[cmd] || COMMAND_DICT.INVALID
+		command.cmd = COMMAND_DICT[cmd] || COMMAND_DICT.NOT_VALID
 		return command;
 	}
 

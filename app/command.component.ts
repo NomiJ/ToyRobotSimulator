@@ -1,23 +1,37 @@
 import { Component } from 'angular2/core'
-import { CommandService } from './command.service'
+import { CommandService, Command } from './command.service'
 import { AutoGrowDirective } from './auto-grow.directive'
+import {Globals,COMMAND_DICT}  from './globals'; 
 
 @Component({
 	selector: 'command',
 	template: `<h2> {{title}} </h2>
-				<input type="text" placeholder="Press Enter to Execute the Command" id="command" autoGrow />
+				<input  #cmd (keyup.enter)="onCommand(cmd.value); cmd.value=''"
+				(blur)="onCommand(cmd.value); cmd.value='' "
+				 placeholder="Press Enter to Execute the Command" autoGrow />
+				  <p>{{uilog}}</p>
+
 				`,
-	providers: [CommandService],
+	providers: [CommandService, Globals],
 	directives: [AutoGrowDirective]
 })
 
-//Angular would know that this is a component class, by lokking into meta data
+//Angular would know that this is a component class, by looking into meta data
 export class CommandComponent {
 	title: string = 'Command Panel'
-	commandHistory: string[];
+	commandService: CommandService;
+	uilog:string = '';
 
 	constructor(commandService: CommandService) {
-		//new CommandService() would not let you unit test this
-		//this.commandHistory = commandService.getCommandHistory();
+		this.commandService = commandService;
+	}
+
+	onCommand(cmd: string) {
+		if(cmd){
+			let command:Command = this.commandService.parse(cmd);
+			if(command.cmd == COMMAND_DICT.NOT_VALID){
+				this.uilog = Globals.ERROR_MSG[COMMAND_DICT.NOT_VALID]
+			}
+		}
 	}
 }

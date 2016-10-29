@@ -5,7 +5,8 @@ import {
     beforeEach,
     beforeEachProviders
 } from "angular2/testing";
-import {CommandService, Command, COMMAND_DICT} from "./command.service";
+import {CommandService, Command} from "./command.service";
+import {COMMAND_DICT}  from  './globals'; 
 
 describe('CommandService', () => {
 

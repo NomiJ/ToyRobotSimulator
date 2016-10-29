@@ -1,79 +1,115 @@
-module.exports = function (config) {
-    config.set({
+// Karma configuration
+// Generated on Fri Oct 28 2016 23:53:13 GMT+1100 (AEDT)
 
-        basePath: '.',
+module.exports = function(config) {
+  config.set({
 
-        frameworks: ['jasmine'],
+    // base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '.',
 
-        files: [
-            // paths loaded by Karma
-            {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
-            {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
-            {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
-            {pattern: 'karma-test-shim.js', included: true, watched: true},
 
-            // paths loaded via module imports
-            {pattern: 'dist/**/*.js', included: false, watched: true},
-            {pattern: 'dist/**/*.html', included: false, watched: true},
-
-            // paths to support debugging with source maps in dev tools
-            {pattern: 'app/**/*.ts', included: false, watched: false},
-            {pattern: 'dist/**/*.js.map', included: false, watched: false},
-            {pattern: 'dist/**/*.css', included: false, watched: false}
-        ],
-
-        // proxied base paths
-        proxies: {
-            // required for component assests fetched by Angular's compiler
-            '/app/': './app/'
-        },
-
-        port: 9876,
-
-        logLevel: config.LOG_INFO,
-
-        colors: true,
-
-        autoWatch: true,
-
-        singleRun: true,
-
-        browsers: ['Chrome'],
-
-        // Karma plugins loaded
-        plugins: [
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['jasmine'],
+     plugins: [
             'karma-jasmine',
             'karma-coverage',
             'karma-remap-istanbul',
             'karma-chrome-launcher'
         ],
 
-        // Coverage reporter generates the coverage
-        reporters: ['progress', 'coverage', 'karma-remap-istanbul'],
+    // list of files / patterns to load in the browser
+    files: [
+  {pattern: 'node_modules/es6-shim/es6-shim.min.js', included: true, watched: true},
+  {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
+  {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
+  {pattern: 'node_modules/zone.js/dist/async-test.js', included: true, watched: true},
+  {pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: true, watched: true},
+  {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
+  {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+  {pattern: 'node_modules/angular2/**/*.js', included: false, watched: false},
 
-        // Source files that you wanna generate coverage for.
-        // Do not include tests or libraries (these files will be instrumented by Istanbul)
-        preprocessors: {
-            'dist/**/!(*spec).js': ['coverage']
-        },
+      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: true},
 
-        coverageReporter: {
-            dir: 'coverage/',
-            reporters: [
-                { type: 'json', subdir: '.', file: 'report.json' }
-            ]
-        },
-        remapIstanbulReporter: {
-            src: 'coverage/report.json',
-            reports: {
-                html: 'coverage/html-report'
-            },
-            timeoutNotCreated: 1000, // default value
-            timeoutNoMoreFiles: 1000 // default value
-        }
-    })
-};
+
+      {pattern: 'karma-test-shim.js', included: true, watched: true},
+
+      // paths loaded via module imports
+      {pattern: 'dist/*.js', included: false, watched: true},
+
+      // paths loaded via Angular's component compiler
+      // (these paths need to be rewritten, see proxies section)
+      {pattern: 'dist/*.html', included: false, watched: true},
+      {pattern: 'dist/*.css', included: false, watched: true},
+
+      // paths to support debugging with source maps in dev tools
+      {pattern: 'app/*.ts', included: false, watched: false},
+      {pattern: 'dist/*.js.map', included: false, watched: false},
+
+
+  // Paths loaded via module imports
+  {pattern: 'dist/**/*.js', included: false, watched: true},
+ {pattern: 'dist/**/*.html', included: false, watched: true},
+      {pattern: 'dist/**/*.css', included: false, watched: true},
+
+  // Paths to support debugging with source maps in dev tools
+  {pattern: 'app/**/*.ts', included: false, watched: true},
+  {pattern: 'dist/**/*.js.map', included: false, watched: false},
+
+    ],
+// proxied base paths
+    proxies: {
+      // required for component assests fetched by Angular's compiler
+      "/app/": "/base/dist/"
+    },
+
+    // list of files to exclude
+    exclude: [
+    ],
+
+
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+    },
+
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress'],
+
+
+    // web server port
+    port: 9876,
+
+
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+
+
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
+
+
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: true,
+
+
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['Chrome'],
+
+
+    // Continuous Integration mode
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: false,
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
+  })
+}

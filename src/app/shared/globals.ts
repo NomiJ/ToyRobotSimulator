@@ -26,7 +26,8 @@ export class Command {
 
 @Injectable()
 export class GLOBALS {
-	public static version: string = "2.1.0"; //Project Shifted to latest Angular + Angular CLI structure
+	public static APP_NAME = 'Toy Robot Simulator!'
+	public static VERSION: string = "2.2.5"; //Unit Test and End to End Test cases Added
 	public static SYS_MSG = {};
 	public static COMMAND_TIPS = {}
 	public static PLACEMENT_CONSTRAINT = -100;

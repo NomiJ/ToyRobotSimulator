@@ -15,7 +15,7 @@ describe('Service: Command', () => {
     expect(service).toBeTruthy();
   }));
 
-  describe('parse method', inject([CommandService], (commandService: CommandService)  => {
+  it('parse method', inject([CommandService], (commandService: CommandService)  => {
     it('should parse the MOVE', () => {
 
       let result: Command = commandService.parse("MOVE");

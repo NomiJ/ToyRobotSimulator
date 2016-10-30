@@ -9,7 +9,6 @@ import {Command,GLOBALS} from './shared/globals'
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    //directives: [BoardComponent, ManualComponent,CommandComponent]
 })
 
 @NgModule({
@@ -17,8 +16,8 @@ import {Command,GLOBALS} from './shared/globals'
 })
 
 export class AppComponent {
-    title = 'Toy Robot Simulator!';
-    version = GLOBALS.version
+    title = GLOBALS.APP_NAME
+    version = GLOBALS.VERSION
     uilog:string = '';
 
     command: Command;

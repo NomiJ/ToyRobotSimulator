@@ -33,7 +33,7 @@ describe('BoardComponent', () => {
     expect(component).toBeDefined();
   });
 
-  //This test is failing on latest Angular2 Release
+  /** TODO: FAILING TEST AFTER MOVE TO ANGULAR 2*/
   /*
   it('should render a table', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
     return tcb.createAsync(BoardComponent)

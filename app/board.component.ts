@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from 'angular2/core'
 import { BoardService } from './board.service'
 import { GLOBALS } from './globals'
-import { Command } from './command.service'
 import { Robot } from './robot.service'
+import { Command } from './command.service'
 
 @Component({
 	selector: 'board',
@@ -41,21 +41,19 @@ export class BoardComponent {
 	static ry: number = -1;
 
 	ngOnChanges(changes: any) {
-		//console.log(changes['myInput'].currentValue);
 		console.log(changes);
 		if (this.commandName) {
-			let r: Robot = new Robot()
+			let r: Robot = Robot.getInstance()
 			let m: string = r.mapCommand(this.commandName)
 			BoardComponent.rx = r.x
 			BoardComponent.ry = r.y
 			this.commandExecuted.emit({ msg: m })
 		}
-		//comBus.sendMessage(m)
 
 	}
 
 	classMap(r: number, c: number) {
-		if (r == BoardComponent.rx && c == BoardComponent.ry)
+		if (r == BoardComponent.ry && c == BoardComponent.rx)
 			return "has-robot";
 		return "no-robot";
 	}

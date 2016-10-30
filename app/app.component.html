@@ -1,6 +1,7 @@
 <h1>
   {{title}}
 </h1>
+<h2>Current Version : {{version}}</h2>
 <board [command]="command" (commandExecuted)="onCommandReceived($event)" ></board>
 <command (commandReceived)="onCommandReceived($event)"></command>
 <div>{{uilog}}<div>

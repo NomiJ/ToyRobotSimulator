@@ -2,7 +2,6 @@ import {  Component, EventEmitter, Input, Output } from 'angular2/core'
 import { CommandService, Command } from './command.service'
 import { AutoGrowDirective } from './auto-grow.directive'
 import {GLOBALS,COMMAND_DICT}  from './globals'; 
-import {CommService} from './comm.service'
 
 @Component({
 	selector: 'command',
@@ -22,7 +21,7 @@ export class CommandComponent {
 
 	title: string = 'Command Panel'
 
-	constructor(public commandService: CommandService, public comBus: CommService) {
+	constructor(public commandService: CommandService) {
 	}
 
 	onCommand(cmd: string) {
@@ -37,8 +36,7 @@ export class CommandComponent {
 					 command.args = args;
 				}
 				this.commandReceived.emit({value:command, msg: GLOBALS.SYS_MSG[command.cmd]})
-				//this.comBus.sendCommand(this.command)
-				//this.uilog = this.comBus.message;
+				
 			}
 		}
 	}

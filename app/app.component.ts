@@ -2,6 +2,7 @@ import { Component } from 'angular2/core';
 import { BoardComponent } from './board.component'
 import { CommandComponent } from './command.component'
 import {Command} from './command.service';
+import {GLOBALS} from './globals'
 
 
 @Component({
@@ -9,12 +10,12 @@ import {Command} from './command.service';
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [BoardComponent, CommandComponent],
-    //  providers: [CommService],
 
 
 })
 export class AppComponent {
     title = 'Toy Robot Simulator!';
+    version = GLOBALS.version
     uilog:string = '';
 
     command: Command;

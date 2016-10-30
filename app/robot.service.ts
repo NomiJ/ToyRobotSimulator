@@ -17,13 +17,14 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
     nose: DIRECTION = DIRECTION.NONE;
 
     public static r: Robot;
-    constructor() {
+    public static getInstance() {
         if (!Robot.r) {
-            Robot.r = this
+            Robot.r = new Robot()
         }
         return Robot.r;
     }
-    isPlaced = true;
+
+    robotHasBeenPlaced = false;
 
     initialize() {
         this.x = this.y = -1;
@@ -32,33 +33,31 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
 
     public mapCommand(command: Command): string {
         if (command) {
-            if (this.isPlaced) {
+            if (this.robotHasBeenPlaced) {
                 switch (command.cmd) {
                     case COMMAND_DICT.LEFT:
                         this.rotate(GLOBALS.LEFT);
-                        break;
+                        return GLOBALS.SYS_MSG[COMMAND_DICT.LEFT]
                     case COMMAND_DICT.RIGHT:
                         this.rotate(GLOBALS.RIGHT);
-                        break;
+                        return GLOBALS.SYS_MSG[COMMAND_DICT.RIGHT]
                     case COMMAND_DICT.REPORT:
-                        this.report();
-                        break;
+                        return this.report()
                     case COMMAND_DICT.MOVE:
-                        return this.move();
+                        return this.move()
                     default:
-                        break;
-
+                        return GLOBALS.SYS_MSG[GLOBALS.UNKNOWN_COMMAND]
                 }
-            } 
-            if (command.cmd == COMMAND_DICT.PLACE) {
-                this.isPlaced = true;
+            }
+            if (!this.robotHasBeenPlaced && command.cmd == COMMAND_DICT.PLACE) {
                 return this.placeValidate(command.args);
             }
+            else
+                return GLOBALS.SYS_MSG[GLOBALS.PLACEMENT_CONSTRAINT]
         }
-        else
-            return GLOBALS.SYS_MSG[GLOBALS.PLACEMENT_CONSTRAINT]
+        return GLOBALS.SYS_MSG[GLOBALS.UNKNOWN_COMMAND]
 
-        return GLOBALS.SYS_MSG[GLOBALS.SUCCESS]
+
     }
 
     rotate(direction: number): void {//Will just move the direction
@@ -100,7 +99,7 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
 
                 break;
         }
-        return GLOBALS.SYS_MSG[GLOBALS.SUCCESS]
+        return validation ? GLOBALS.SYS_MSG[COMMAND_DICT.MOVE] : GLOBALS.SYS_MSG[GLOBALS.UNKNOWN_COMMAND]
     }
 
     private setDirection(f: string) {
@@ -131,9 +130,10 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
 
     placeValidate(args: string[]): string {//Will only place -- the place command needs alot of improvement structure wise
 
-        if (args.length == 3 && this.validate(+args[0], +args[1]) && (args[2].toLowerCase().match("[nesw]"))) {
+        if (args.length == 3 && this.validate(+args[0], +args[1]) && (args[2][0].toLowerCase().match("[nesw]"))) {
             this.place(+args[0], +args[1])
-            this.setDirection(args[2])
+            this.setDirection(args[2][0])
+            this.robotHasBeenPlaced = true;
             return this.report()
 
         }
@@ -146,7 +146,7 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
     }
 
     report(): string {//Will report
-        let r: string = `My position is ${this.x} row and ${this.y} cols and facing  ${this.nose}`
+        let r: string = `My position is ${this.x} row and ${this.y} cols and facing  ${DIRECTION[this.nose]}`
         return r;
     }
 

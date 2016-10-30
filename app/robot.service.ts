@@ -31,26 +31,28 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
     }
 
     public mapCommand(command: Command): string {
-        if (this.isPlaced && command) {
-            switch (command.cmd) {
-                case COMMAND_DICT.LEFT:
-                    this.rotate(GLOBALS.LEFT);
-                    break;
-                case COMMAND_DICT.RIGHT:
-                    this.rotate(GLOBALS.RIGHT);
-                    break;
-                case COMMAND_DICT.REPORT:
-                    this.report();
-                    break;
-               //These cases return the success or failure reason
-               case COMMAND_DICT.MOVE:
-                    return this.move();
-                case COMMAND_DICT.PLACE:
-                    return this.placeValidate(command.args);
-               
-                default:
-                    break;
+        if (command) {
+            if (this.isPlaced) {
+                switch (command.cmd) {
+                    case COMMAND_DICT.LEFT:
+                        this.rotate(GLOBALS.LEFT);
+                        break;
+                    case COMMAND_DICT.RIGHT:
+                        this.rotate(GLOBALS.RIGHT);
+                        break;
+                    case COMMAND_DICT.REPORT:
+                        this.report();
+                        break;
+                    case COMMAND_DICT.MOVE:
+                        return this.move();
+                    default:
+                        break;
 
+                }
+            } 
+            if (command.cmd == COMMAND_DICT.PLACE) {
+                this.isPlaced = true;
+                return this.placeValidate(command.args);
             }
         }
         else
@@ -68,7 +70,7 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
     }
 
     move(): string {//Will just move the position based on direction
-        let validation:boolean  = false
+        let validation: boolean = false
 
         switch (this.nose) {
 
@@ -93,8 +95,8 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
 
             case DIRECTION.WEST:
                 //decrease x
-                validation = this.validate(this.x - 1, this.y) 
-                this.x = validation? this.x - 1 : this.x
+                validation = this.validate(this.x - 1, this.y)
+                this.x = validation ? this.x - 1 : this.x
 
                 break;
         }
@@ -127,12 +129,12 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
             (y >= 0 && y < GLOBALS.MAXCOLS)
     }
 
-    placeValidate(args: string[]) : string {//Will only place -- the place command needs alot of improvement structure wise
+    placeValidate(args: string[]): string {//Will only place -- the place command needs alot of improvement structure wise
 
-        if (args.length == 3 && this.validate(+args[0], +args[1]) && (args[2].match("[nesw]/i"))) {
+        if (args.length == 3 && this.validate(+args[0], +args[1]) && (args[2].toLowerCase().match("[nesw]"))) {
             this.place(+args[0], +args[1])
             this.setDirection(args[2])
-            return         this.report()
+            return this.report()
 
         }
         return GLOBALS.SYS_MSG[GLOBALS.VALIDATION_CONSTRAINT]

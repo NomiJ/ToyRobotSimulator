@@ -1,6 +1,7 @@
 import { Component } from 'angular2/core';
 import { BoardComponent } from './board.component'
 import { CommandComponent } from './command.component'
+import { ManualComponent } from './manual.component'
 import {Command} from './command.service';
 import {GLOBALS} from './globals'
 
@@ -9,7 +10,7 @@ import {GLOBALS} from './globals'
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
-    directives: [BoardComponent, CommandComponent],
+    directives: [BoardComponent, ManualComponent,CommandComponent],
 
 
 })

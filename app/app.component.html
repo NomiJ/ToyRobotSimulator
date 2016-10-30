@@ -2,6 +2,15 @@
   {{title}}
 </h1>
 <h2>Current Version : {{version}}</h2>
+<div class="table-responsive">
+  <table class="table">
+      <tr>
+  <td class="left">
 <board [command]="command" (commandExecuted)="onCommandReceived($event)" ></board>
+</td>
+<td class="lefttop">
+  <manual></manual>
+</td>
+</tr></table>
 <command (commandReceived)="onCommandReceived($event)"></command>
 <div>{{uilog}}<div>

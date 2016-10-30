@@ -1,4 +1,4 @@
-System.register(['angular2/core', './board.component', './command.component', './globals'], function(exports_1, context_1) {
+System.register(['angular2/core', './board.component', './command.component', './manual.component', './globals'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './board.component', './command.component', '.
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, board_component_1, command_component_1, globals_1;
+    var core_1, board_component_1, command_component_1, manual_component_1, globals_1;
     var AppComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['angular2/core', './board.component', './command.component', '.
             },
             function (command_component_1_1) {
                 command_component_1 = command_component_1_1;
+            },
+            function (manual_component_1_1) {
+                manual_component_1 = manual_component_1_1;
             },
             function (globals_1_1) {
                 globals_1 = globals_1_1;
@@ -46,7 +49,7 @@ System.register(['angular2/core', './board.component', './command.component', '.
                         selector: 'my-app',
                         templateUrl: 'app/app.component.html',
                         styleUrls: ['app/app.component.css'],
-                        directives: [board_component_1.BoardComponent, command_component_1.CommandComponent],
+                        directives: [board_component_1.BoardComponent, manual_component_1.ManualComponent, command_component_1.CommandComponent],
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

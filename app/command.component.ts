@@ -30,13 +30,13 @@ export class CommandComponent {
 			let command:Command;
 			command = this.commandService.parse(cmd);
 			if(command.cmd == COMMAND_DICT.NOT_VALID){
-				this.commandReceived.emit({err:GLOBALS.SYS_MSG[COMMAND_DICT.NOT_VALID]})
+				this.commandReceived.emit({msg:GLOBALS.SYS_MSG[COMMAND_DICT.NOT_VALID]})
 			}else{
 				if(command.cmd == COMMAND_DICT.PLACE){
 					 let [, ...args] = cmd.trim().split(" ");
 					 command.args = args;
 				}
-				this.commandReceived.emit({value:command, info: GLOBALS.SYS_MSG[command.cmd]})
+				this.commandReceived.emit({value:command, msg: GLOBALS.SYS_MSG[command.cmd]})
 				//this.comBus.sendCommand(this.command)
 				//this.uilog = this.comBus.message;
 			}

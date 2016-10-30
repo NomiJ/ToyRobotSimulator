@@ -1,14 +1,15 @@
 import { Component } from 'angular2/core';
 import { BoardComponent } from './board.component'
 import { CommandComponent } from './command.component'
-import {CommService} from './comm.service';
+import {Command} from './command.service';
+
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [BoardComponent, CommandComponent],
-      providers: [CommService],
+    //  providers: [CommService],
 
 
 })
@@ -16,13 +17,14 @@ export class AppComponent {
     title = 'Toy Robot Simulator!';
     uilog:string = '';
 
+    command: Command;
+
     onCommandReceived(event: any) {
-        if(event.err){
-            this.uilog = event.err
-        }else if(event.info){
-            this.uilog = event.info
-            //pass event.value
-        
+        if(event.msg){
+            this.uilog = event.msg
+        }
+        if(event.value){
+            this.command = event.value
         }
     }
 

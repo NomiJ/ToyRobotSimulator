@@ -17,29 +17,28 @@ import {CommService} from './comm.service'
 
 //Angular would know that this is a component class, by looking into meta data
 export class CommandComponent {
-	@Input() command:Command;
-	@Output() commandReceived = new EventEmitter<Command>();
+	
+	@Output() commandReceived = new EventEmitter();
 
 	title: string = 'Command Panel'
-	uilog:string = '';
 
 	constructor(public commandService: CommandService, public comBus: CommService) {
-		this.uilog = comBus.message;
 	}
 
 	onCommand(cmd: string) {
 		if(cmd){
-			this.command = this.commandService.parse(cmd);
-			if(this.command.cmd == COMMAND_DICT.NOT_VALID){
-				this.uilog = GLOBALS.SYS_MSG[COMMAND_DICT.NOT_VALID]
+			let command:Command;
+			command = this.commandService.parse(cmd);
+			if(command.cmd == COMMAND_DICT.NOT_VALID){
+				this.commandReceived.emit({err:GLOBALS.SYS_MSG[COMMAND_DICT.NOT_VALID]})
 			}else{
-				//this.uilog = GLOBALS.SYS_MSG[command.cmd]
-				if(this.command.cmd == COMMAND_DICT.PLACE){
-					this.command.args = cmd.trim().split(' ').splice(0, 1);//this is such a bad code:todo
+				if(command.cmd == COMMAND_DICT.PLACE){
+					 let [, ...args] = cmd.trim().split(" ");
+					 command.args = args;
 				}
-				//this.commandReceived.emit(this.command)
-				this.comBus.sendCommand(this.command)
-				this.uilog = this.comBus.message;
+				this.commandReceived.emit({value:command, info: GLOBALS.SYS_MSG[command.cmd]})
+				//this.comBus.sendCommand(this.command)
+				//this.uilog = this.comBus.message;
 			}
 		}
 	}

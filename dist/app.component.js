@@ -30,7 +30,16 @@ System.register(['angular2/core', './board.component', './command.component', '.
             AppComponent = (function () {
                 function AppComponent() {
                     this.title = 'Toy Robot Simulator!';
+                    this.uilog = '';
                 }
+                AppComponent.prototype.onCommandReceived = function (event) {
+                    if (event.err) {
+                        this.uilog = event.err;
+                    }
+                    else if (event.info) {
+                        this.uilog = event.info;
+                    }
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',

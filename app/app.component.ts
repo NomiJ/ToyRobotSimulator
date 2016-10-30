@@ -14,4 +14,16 @@ import {CommService} from './comm.service';
 })
 export class AppComponent {
     title = 'Toy Robot Simulator!';
+    uilog:string = '';
+
+    onCommandReceived(event: any) {
+        if(event.err){
+            this.uilog = event.err
+        }else if(event.info){
+            this.uilog = event.info
+            //pass event.value
+        
+        }
+    }
+
 }

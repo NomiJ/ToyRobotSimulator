@@ -1,0 +1,16 @@
+<h1>
+  {{title}}
+</h1>
+<h2>Current Version : {{version}}</h2>
+<div class="table-responsive">
+  <table class="table">
+      <tr>
+  <td class="left">
+<app-board [command]="command" (commandExecuted)="onCommandReceived($event)" ></app-board>
+</td>
+<td class="lefttop">
+  <app-manual></app-manual>
+</td>
+</tr></table>
+<app-command (commandReceived)="onCommandReceived($event)"></app-command>
+<div>{{uilog}}<div>

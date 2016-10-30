@@ -119,7 +119,7 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
             (y >= 0 && y < GLOBALS.MAXCOLS)
     }
 
-    placeValidate(args: string[]): string {//Will only place -- the place command needs alot of improvement structure wise
+    private placeValidate(args: string[]): string {//Will only place -- the place command needs alot of improvement structure wise
 
         if (args.length == 3 && this.validate(+args[0], +args[1]) && (args[2][0].toLowerCase().match("[nesw]"))) {
             this.place(+args[0], +args[1])
@@ -131,12 +131,12 @@ export class Robot implements IMoveAble {//Singleton? May be look for a better w
         return GLOBALS.SYS_MSG[GLOBALS.VALIDATION_CONSTRAINT]
     }
 
-    place(x: number, y: number) {
+    private place(x: number, y: number) {
         this.x = x
         this.y = y
     }
 
-    report(): string {//Will report
+    private report(): string {//Will report
         let r: string = `My position is ${this.x} row and ${this.y} cols and facing  ${DIRECTION[this.nose]}`
         return r;
     }

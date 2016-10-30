@@ -1,6 +1,6 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Renderer, Input } from '@angular/core';
 
-@Directive({
+@Directive({/* Attribute */
 	selector: '[autoGrow]',
 	host: {
 		'style': 'width:250px;%',
@@ -13,19 +13,21 @@ export class AutoGrowDirective {
 
 	originalColor: string = '';
 	//private keyword will create an el field and set it with incoming value
-	constructor(private el: ElementRef) {
+	constructor(private _el: ElementRef, private _renderer: Renderer) {
 	}
 
 	onFocus() {
 
-		this.originalColor = this.el.nativeElement.style.backgroundColor;
-		this.el.nativeElement.style.backgroundColor = "yellow";
-		this.el.nativeElement.style.width = '350';
+		this.originalColor = this._el.nativeElement.style.backgroundColor || 'white';
+		this._renderer.setElementStyle(this._el.nativeElement, 'backgroundColor', 'yellow');
+		this._renderer.setElementStyle(this._el.nativeElement, 'width', '350px');
+
+
 	}
 
 	onBlur() {
-		this.el.nativeElement.style.backgroundColor = this.originalColor || 'white';
-		this.el.nativeElement.style.width = '250';
+		this._renderer.setElementStyle(this._el.nativeElement, 'backgroundColor', this.originalColor);
+		this._renderer.setElementStyle(this._el.nativeElement, 'width', '250px');
 
 	}
 

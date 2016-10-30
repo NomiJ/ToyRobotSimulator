@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 export enum COMMAND_DICT {
+	NOT_VALID,
 	LEFT,
 	RIGHT,
 	PLACE,
 	MOVE,
-	REPORT,
-	NOT_VALID
+	REPORT
 }
 
 export enum DIRECTION {
@@ -18,9 +18,9 @@ export enum DIRECTION {
 	NONE = -1
 }
 
-export class Command{
-	cmd:COMMAND_DICT;
-	args:string[];
+export class Command {
+	cmd: COMMAND_DICT;
+	args: string[];
 }
 
 
@@ -35,11 +35,11 @@ export class GLOBALS {
 	public static SUCCESS = 100;
 	public static RIGHT = 1;
 	public static LEFT = -1;
-	
 
 
-    public static get MAXROWS(): number { return 5; }
-    public static get MAXCOLS(): number { return 5; }
+
+	public static get MAXROWS(): number { return 5; }
+	public static get MAXCOLS(): number { return 5; }
 
 	constructor() {
 	}
